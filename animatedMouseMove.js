@@ -1,5 +1,9 @@
 "use strict";
 
+// so that touchmove is not scrolling
+document.body.addEventListener('touchmove', function(event) {
+  event.preventDefault();
+}, false); 
 
 var FizzyText = function() {
   this.jitter = 12;
@@ -57,7 +61,10 @@ var svg = d3.select('.main')
         .attr('height', height + margin.top + margin.bottom)
         .on("mousemove", function() {
 				updateArray(d3.mouse(this));
-			});
+			})
+        .on("touchmove", function() {
+        		updateArray(d3.mouse(this));
+			});;
 
 svg.append('path')
 		.attr("d", lineFunction(points))

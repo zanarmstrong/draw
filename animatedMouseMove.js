@@ -47,24 +47,26 @@ var points = [];
 // define the function for the line with jitter
 var lineFunction = d3.svg.line()
 	.x(function(d) {
-		return d.x + Math.random() * text.jitter - text.jitter/2 - margin.left;
+		return d.x + text.jitter * (Math.random() - .5) - margin.left;
 	})
 	.y(function(d) {
-		return d.y + Math.random() * text.jitter - text.jitter/2 - margin.top;
+		return d.y + text.jitter * (Math.random() - .5) - margin.top;
 	})
 	.interpolate('basis');
 
 // standard svg intro + mousemove
-var svg = d3.select('.main')
-      .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .on("mousemove", function() {
-				updateArray(d3.mouse(this));
-			})
-        .on("touchmove", function() {
-        		updateArray(d3.mouse(this));
-			});;
+
+// STANDARD SVG SETUP
+var svg = d3.select('body')
+  .append('svg')
+  .attr('width', width + margin.left + margin.right)
+  .attr('height', height + margin.top + margin.bottom)
+  .on("mousemove", function() {
+  	updateArray(d3.mouse(this));
+  })
+  .on("touchmove", function() {
+  	updateArray(d3.mouse(this));
+  });
 
 svg.append('path')
 		.attr("d", lineFunction(points))
